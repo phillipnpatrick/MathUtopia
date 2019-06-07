@@ -1,0 +1,158 @@
+.calculator-hdr {
+  background-color: #2196F3;
+  color: #fff;
+}
+
+.calculator-outer-div {
+  position: absolute;
+  margin: auto;
+  width:310px;
+  height:440px;
+  background-color: black;
+}
+
+.calculator-screen {
+  width: 290px;
+  height: 40px;
+  background-color: white;
+  position: relative;
+  top: 10px;
+  left: 10px;
+  border-color: black;
+  border-style: solid;
+  border-width: thin;
+  text-align: right;
+  font-weight: bolder;
+  padding-right: 5px;
+  padding-bottom: 10px;
+  font-size: 2em;
+  margin-top: 40px;
+}
+
+.calculator-btn-wrapper {
+  border-radius: 10px; /* rounded courners */
+  background-color: #81e1da;
+  font-weight: bolder;
+  width: 65px;
+  text-align: center;
+  display: inline-block; /* separate into columns */
+  position: relative;
+  left: 10px;
+  margin-right: 10px;
+  margin-top: 20px;
+  height: 50px;
+  line-height: 50px; /* center text vertically; always set to height value */
+  border-radius: 10px;
+}
+
+.calculator-btn {
+  font-size: 20pt;
+  font-weight: bolder;
+  background-color: transparent;
+  border: none;
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  line-height: normal;
+  border-radius: 10px;
+}
+
+.calculator-btn-long {
+  width: 140px;
+}
+
+.calculator-btn-special {
+  background-color: lightgray;
+}
+
+.calculator-btn-function {
+  background-color: orange;
+}
+
+/* Minimizable */
+.window-calculator {}
+.window-calculator .window-calculator-controls {
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+}
+.window-calculator .window-calculator-controls .calc-maximize {
+  position: absolute;
+  width: 300px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  transition: opacity 0.3s 0.5s, top 0s 0.8s;
+}
+.window-calculator .window-calculator-controls .calc-close, .window-calculator .window-calculator-controls .calc-minimize {
+  opacity: 0.5;
+  cursor: pointer;
+}
+.window-calculator .window-calculator-controls .calc-close:hover, .window-calculator .window-calculator-controls .calc-minimize:hover {
+  opacity: 0.7;
+}
+.window-calculator .window-calculator-controls .calc-close:active, .window-calculator .window-calculator-controls .calc-minimize:active {
+  opacity: 1;
+}
+.window-calculator .window-calculator-controls .calc-close {
+  width: 30px;
+  height: 30px;
+  float: left;
+}
+.window-calculator .window-calculator-controls .calc-close:before, .window-calculator .window-calculator-controls .calc-close:after {
+  position: absolute;
+  content: "";
+  width: 12px;
+  height: 2px;
+  background-color: black;
+  position: absolute;
+  border-radius: 2px;
+  top: 14px;
+  left: 9px;
+}
+.window-calculator .window-calculator-controls .calc-close:before {
+  transform: rotate(45deg);
+}
+.window-calculator .window-calculator-controls .calc-close:after {
+  transform: rotate(-45deg);
+}
+.window-calculator .window-calculator-controls .calc-minimize {
+  width: 30px;
+  height: 30px;
+  float: left;
+  position: relative;
+}
+.window-calculator .window-calculator-controls .calc-minimize:before, .window-calculator .window-calculator-controls .calc-minimize:after {
+  position: absolute;
+  content: "";
+  width: 10px;
+  height: 2px;
+  background-color: black;
+  position: absolute;
+  border-radius: 2px;
+  top: 14px;
+  left: 10px;
+}
+.window-calculator .window-calculator-controls .calc-minimize:before {
+  transform: translateX(-3px) rotate(45deg);
+}
+.window-calculator .window-calculator-controls .calc-minimize:after {
+  transform: translateX(3px) rotate(-45deg);
+}
+
+.calc-minimized .window-calculator {
+  top: 97%;
+  opacity: 0.5;
+  position: fixed;
+  left: 50%;
+  height: 400px;
+}
+.calc-minimized .window-calculator:hover {
+  opacity: 0.75;
+}
+.calc-minimized .window-calculator .calc-maximize {
+  top: 0;
+  opacity: 1;
+  transition: opacity 0.3s 0.5s, top 0s 0.5s;
+  cursor: pointer;
+}
