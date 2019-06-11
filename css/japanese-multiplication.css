@@ -1,0 +1,77 @@
+.jm-workarea {
+  background-color: aliceblue;
+  width: 500px;
+  height: 500px;
+  top: 0px;
+  left: 0px;
+  position: absolute;
+}
+.stick {
+  opacity: 0.5;
+  cursor: pointer;
+  width: 400px;
+  height: 3px;
+  float: left;
+  position: absolute;
+  content: "";
+}
+.stick:hover {
+  opacity: 0.7;
+}
+.stick:active {
+  opacity: 1;
+}
+.stick-negative-slope {
+  background-color: red;
+  transform: rotate(45deg);
+}
+
+.stick-positive-slope {
+  background-color: blue;
+  transform: rotate(-45deg);
+}
+
+.stick-intersection {
+  height: 8px;
+  width: 8px;
+  background-color: black;
+  border-radius: 50%;
+  display: inline-block;
+  position: absolute;
+}
+
+.stick-highlight-circle {
+  height: 80px;
+  width: 80px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  position: absolute;
+  opacity: 0.5;
+}
+
+.stick-highlight-oblong {
+  height: 80px;
+  width: 400px;
+  background-color: #bbb;
+  border-radius: 16px;
+  display: inline-block;
+  position: absolute;
+  opacity: 0.5;
+}
+
+.vertical-axis {
+  border-left: 2px dotted indigo;
+  height: 500px;
+  position: absolute;
+  left: 245px;
+  margin-left: -3px;
+  top: 0;
+}
+
+.horizontal-axis {
+  border-bottom: 2px dotted indigo;
+  width: 500px;
+  position: absolute;
+  top: 245px;
+}

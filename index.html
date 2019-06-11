@@ -10,21 +10,94 @@
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/calculator.css">
     <link rel="stylesheet" href="css/draggable.css">
+    <link rel="stylesheet" href="css/japanese-multiplication.css">
     <link rel="stylesheet" href="css/general.css">
 
     <title>Math Utopia</title>
   </head>
-  <body>
-    <div id="calculator" class="window-calculator draggable-div">
-      <div class="calculator-outer-div rounded-corners">
-        <div id="calculator-hdr" class="window-calculator-controls draggable-hdr calculator-hdr rounded-top-corners">
-          <div class="calc-maximize">Calculator</div>
-          <!-- <div class="calc-close"></div> -->
-          <div class="calc-minimize"></div>
-        </div>
-        <div id="calculator-body">
-          <div id="calculator-screen">
-            <input type="text" id="calculator-txt-screen" class="form-control calculator-screen"  style="border-radius: 10px;" placeholder="0" disabled maxlength="16">
+  <body class="calc-minimized">
+    <div id="workspace">
+      <div id="japanese-multiplication" class="jm-workarea">
+<!--
+        <div class="stick stick-positive-slope" style="top: 125px; left: 0px; position: absolute;"></div>
+        <div class="stick stick-positive-slope" style="top: 125px; left: 20px; position: absolute;"></div>
+        <div class="stick stick-positive-slope" style="top: 125px; left: 40px; position: absolute;"></div>
+
+        <div class="stick stick-negative-slope" style="top: 125px; left: 125px; position: absolute;"></div>
+        <div class="stick stick-negative-slope" style="top: 125px; left: 105px; position: absolute;"></div>
+
+        <div class="stick-intersection" style="top: 15px; left: 165px; position: absolute;"></div>
+        <div class="stick-intersection" style="top: 15px; left: 252px; position: absolute;"></div>
+
+        <div class="stick-intersection" style="top: 60px; left: 208.5px; position: absolute; background-color: green;"></div>
+        <!-- (165+252)/2 -->
+        <!-- <div class="stick-intersection" style="top: 70px; left: 218.5px; position: absolute; background-color: green;"></div>
+        <div class="stick-intersection" style="top: 80px; left: 228.5px; position: absolute; background-color: green;"></div>
+
+        <div class="stick-intersection" style="top: 70px; left: 198.5px; position: absolute; background-color: green;"></div>
+        <div class="stick-intersection" style="top: 80px; left: 208.5px; position: absolute; background-color: green;"></div>
+        <div class="stick-intersection" style="top: 90px; left: 218.5px; position: absolute; background-color: green;"></div>
+
+        <div class="stick-highlight-circle" style="top: 40px; left: 179.5px;"></div>
+
+        <div class="stick stick-positive-slope" style="top: 225px; left: 100px; position: absolute;"></div>
+        <div class="stick-intersection" style="top: 160px; left: 308.5px; position: absolute; background-color: green;"></div>  -->
+        <!-- (60+100, 208.5+100) -->
+        <!-- <div class="stick-intersection" style="top: 170px; left: 298.5px; position: absolute; background-color: green;"></div>
+        <div class="stick stick-negative-slope" style="top: 225px; left: 0px; position: absolute;"></div>
+        <div class="stick-intersection" style="top: 172px; left: 95.5px; position: absolute; background-color: green;"></div>
+        <div class="stick-intersection" style="top: 182px; left: 105.5px; position: absolute; background-color: green;"></div>
+        <div class="stick-intersection" style="top: 192px; left: 115.5px; position: absolute; background-color: green;"></div>
+        <div class="stick-intersection" style="top: 273px; left: 195.5px; position: absolute; background-color: green;"></div>
+
+        <div class="stick-highlight-oblong" style="top: 137px; left: 27px;"></div>
+        <div class="stick-highlight-circle" style="top: 237px; left: 159.5px;"></div>
+ -->
+
+        <div class="vertical-axis"></div>
+        <div class="horizontal-axis"></div>
+
+        <!-- 31  -->
+        <!-- <div class="stick stick-positive-slope" style="top: 115px; left: 20px;"></div> -->
+        <!-- <div class="stick stick-positive-slope" style="top: 130px; left: 20px;"></div> -->
+        <!-- <div class="stick stick-positive-slope" style="top: 145px; left: 20px;"></div> -->
+        <!-- <div class="stick stick-positive-slope" style="top: 260px; left: 70px;"></div> -->
+
+        <!-- 32  -->
+        <!-- <div class="stick stick-negative-slope" style="top: 115px; left: 100px;"></div> -->
+        <!-- <div class="stick stick-negative-slope" style="top: 115px; left: 85px;"></div> -->
+        <!-- <div class="stick stick-negative-slope" style="top: 115px; left: 70px;"></div> -->
+        <!-- <div class="stick stick-negative-slope" style="top: 230px; left: 20px;"></div> -->
+        <!-- <div class="stick stick-negative-slope" style="top: 230px; left: 5px;"></div> -->
+
+        <!-- hundreds  -->
+        <!-- <div class="stick-intersection" style="top: 72px; left: 206px;"></div> -->
+        <!-- <div class="stick-intersection" style="top: 80px; left: 214px;"></div> -->
+        <!-- <div class="stick-intersection" style="top: 88px; left: 222px;"></div> -->
+
+        <!-- <div class="stick-intersection" style="top: 80px; left: 198px;"></div> -->
+        <!-- <div class="stick-intersection" style="top: 88px; left: 206px;"></div> -->
+        <!-- <div class="stick-intersection" style="top: 96px; left: 214px;"></div> -->
+
+        <!-- <div class="stick-intersection" style="top: 88px; left: 190px;"></div> -->
+        <!-- <div class="stick-intersection" style="top: 96px; left: 198px;"></div> -->
+        <!-- <div class="stick-intersection" style="top: 104px; left: 206px;"></div> -->
+
+        <!-- <div class="stick-highlight-circle" style="top: 52px; left: 170px;"></div> -->
+
+        <!-- tens  -->
+      </div>
+      <div id="calculator" class="window-calculator draggable-div">
+        <div class="calculator-outer-div rounded-corners">
+          <div id="calculator-hdr" class="window-calculator-controls draggable-hdr calculator-hdr rounded-top-corners">
+            <div class="calc-maximize">Calculator</div>
+            <!-- <div class="calc-close"></div> -->
+            <div class="calc-minimize"></div>
+          </div>
+          <div id="calculator-body">
+            <div id="calculator-screen">
+              <input type="text" id="calculator-txt-screen" class="form-control calculator-screen"  style="border-radius: 10px;" placeholder="0" disabled maxlength="16">
+            </div>
           </div>
         </div>
       </div>
