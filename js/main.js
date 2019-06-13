@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  console.log("ready");
+  // console.log("ready");
   var draggableCalculator = document.getElementById("calculator");
   if (draggableCalculator != null){
     dragElement(document.getElementById("calculator"));
