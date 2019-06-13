@@ -8,9 +8,15 @@ $(document).ready(function(){
     var b = new Multiplicand(33, slopeType.NEGATIVE);
 
     drawSticks(a);
-    sleep(a.pauseTime()).then(() => { drawSticks(b); })
+    // sleep(a.pauseTime()).then(() => {
+      drawSticks(b);
+    // })
 
-    // draw intersections
+    // sleep(b.pauseTime()+2000).then(() => {
+      // draw intersections
+      var i = new Intersection(NORTH_TOP, NORTH_LEFT, directionType.NORTH);
+      $('#japanese-multiplication').append(i.getHtml());
+    // })
 
     function drawSticks(item){
       for (var j = 0; j < item.getStickCount(); j++){
@@ -21,11 +27,27 @@ $(document).ready(function(){
         })(j);
       }
     }
+
+    function getPosition(elementId) {
+      return document.getElementById(elementId).getBoundingClientRect();
+    }
 });
+
+function myFunction(){
+  var div = document.getElementById("positive-stick-1");
+  console.log("div = " + div);
+  var rect = div.getBoundingClientRect();
+  x = rect.left;
+  y = rect.top;
+  w = rect.width;
+  h = rect.height;
+  console.log(rect);
+}
 
 const CSS_STICK = "stick";
 const CSS_STICK_NEGATIVE_SLOPE = "stick-negative-slope";
 const CSS_STICK_POSITIVE_SLOPE = "stick-positive-slope";
+const CSS_STICK_INTERSECTION = "stick-intersection";
 
 const DEFAULT_NEGATIVE_TOP = 158;
 const DEFAULT_NEGATIVE_LEFT = 118;
@@ -35,33 +57,25 @@ const DEFAULT_STICK_OFFSET = 20;
 const DEFAULT_TWO_DIGIT_TOP_OFFSET = 170;
 const DEFAULT_TWO_DIGIT_LEFT_OFFSET = 160;
 const DEFAULT_TWO_DIGIT_NEGATIVE_LEFT_OFFSET = 118;
+const NORTH_TOP = 80;
+const NORTH_LEFT = 238.5;
+const SOUTH_TOP = 410;
+const SOUTH_LEFT = 238.5;
+const WEST_TOP = 243;
+const WEST_LEFT = 74;
+const EAST_TOP = 243;
+const EAST_LEFT = 403;
 
 const slopeType = {
   POSITIVE: 'positive',
   NEGATIVE: 'negative'
 }
 
-class JapaneseMultiplication{
-  // List of sticks
-  // List of intersections
-  // List of highlights
-
-  constructor(multiplicandA, multiplicandB){
-    this.multiplicandA = new Multiplicand(multiplicandA);
-    this.multiplicandB = new Multiplicand(multiplicandB);
-
-    this.sticks = [];
-    this.sticks.push(new JapaneseMultiplicationStick(DEFAULT_POSITIVE_TOP, DEFAULT_POSITIVE_LEFT, slope.POSITIVE));
-    this.sticks.push(new JapaneseMultiplicationStick(DEFAULT_NEGATIVE_TOP, DEFAULT_NEGATIVE_LEFT, slope.NEGATIVE));
-  }
-
-  getInnerHtml(){
-    var html = "";
-    for (var i = 0; i < this.sticks.length; i++){
-      html += this.sticks[i].getHtml();
-    }
-    return html;
-  }
+const directionType = {
+  NORTH: 'north',
+  EAST: 'east',
+  WEST: 'west',
+  SOUTH: 'south'
 }
 
 class Multiplicand{
@@ -103,12 +117,17 @@ class Multiplicand{
     return this.sticks.length;
   }
 
+  getStickDivId(index){
+    return this.sticks[index].id;
+  }
+
   pauseTime(){
     return this.sticks.length * PAUSE_DRAW_TIME;
   }
 
   setPositiveSticks(){
     // console.log("setPositiveSticks");
+    var index = 1;
     for (var digit = 0; digit < this.digits.length; digit++){
       // console.log("setPositiveSticks: value = " + this.digits[digit]);
       for (var k = 0; k < this.digits[digit]; k++){
@@ -119,7 +138,7 @@ class Multiplicand{
           top = DEFAULT_POSITIVE_TOP + DEFAULT_TWO_DIGIT_TOP_OFFSET;
           left =  DEFAULT_POSITIVE_LEFT + DEFAULT_TWO_DIGIT_LEFT_OFFSET + (k * DEFAULT_STICK_OFFSET);
         }
-        this.sticks.push(new JapaneseMultiplicationStick(top, left, this.slope));
+        this.sticks.push(new JapaneseMultiplicationStick(top, left, this.slope, index++));
       }
       // console.log("setPositiveSticks: this.sticks.length = " + this.sticks.length);
     }
@@ -127,6 +146,7 @@ class Multiplicand{
 
   setNegativeSticks(){
     // console.log("setNegativeSticks");
+    var index = 1;
     for (var digit = 0; digit < this.digits.length; digit++){
       // console.log("setNegativeSticks: value = " + this.digits[digit]);
       for (var k = 0; k < this.digits[digit]; k++){
@@ -137,7 +157,7 @@ class Multiplicand{
           top = DEFAULT_NEGATIVE_TOP + DEFAULT_TWO_DIGIT_TOP_OFFSET;
           left =  DEFAULT_NEGATIVE_LEFT - DEFAULT_TWO_DIGIT_NEGATIVE_LEFT_OFFSET - (k * DEFAULT_STICK_OFFSET);
         }
-        this.sticks.push(new JapaneseMultiplicationStick(top, left, this.slope));
+        this.sticks.push(new JapaneseMultiplicationStick(top, left, this.slope, index++));
       }
       // console.log("setNegativeSticks: this.sticks.length = " + this.sticks.length);
     }
@@ -145,10 +165,11 @@ class Multiplicand{
 }
 
 class JapaneseMultiplicationStick{
-  constructor(top, left, slope){
+  constructor(top, left, slope, index){
     this.top = top;
     this.left = left;
     this.slope = slope;
+    this.id = slope + "-stick-" + index;
   }
 
   getCss(){
@@ -178,6 +199,29 @@ class JapaneseMultiplicationStick{
   }
 
   getHtml(){
-    return "<div " + this.getCss() + " " + this.getStyle() + "></div>";
+    return "<div id='" + this.id + "' " + this.getCss() + " " + this.getStyle() + "></div>";
+  }
+}
+
+class Intersection{
+  constructor(top, left, direction){
+    this.top = top;
+    this.left = left;
+    this.direction = direction;
+  }
+
+  getHtml(){
+    return "<div class='" + CSS_STICK_INTERSECTION + "' " + this.getStyle() + "></div>";
+  }
+
+  getStyle(){
+    var style = "style='";
+
+    style += "top: " + this.top + "px; ";
+    style += "left: " + this.left + "px;";
+
+    style += "'";
+
+    return style;
   }
 }
