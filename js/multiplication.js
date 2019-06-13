@@ -7,14 +7,16 @@ $(document).ready(function(){
     var a = new Multiplicand(31, slopeType.POSITIVE);
     var b = new Multiplicand(33, slopeType.NEGATIVE);
 
-    drawItem(a);
-    sleep(a.getStickCount()*PAUSE_DRAW_TIME).then(() => { drawItem(b); })
+    drawSticks(a);
+    sleep(a.pauseTime()).then(() => { drawSticks(b); })
 
-    function drawItem(item){
+    // draw intersections
+
+    function drawSticks(item){
       for (var j = 0; j < item.getStickCount(); j++){
         (function (j) {
           setTimeout(function () {
-            $('#japanese-multiplication').append(item.drawNext());
+            $('#japanese-multiplication').append(item.drawNextStick());
           }, PAUSE_DRAW_TIME*j);
         })(j);
       }
@@ -83,7 +85,7 @@ class Multiplicand{
     }
   }
 
-  drawNext(){
+  drawNextStick(){
     // console.log("drawNext: this.stickIndex = " + this.stickIndex + "; this.sticks.length = " + this.sticks.length);
     if (this.stickIndex > this.sticks.length){
       return "";
@@ -99,6 +101,10 @@ class Multiplicand{
 
   getStickCount(){
     return this.sticks.length;
+  }
+
+  pauseTime(){
+    return this.sticks.length * PAUSE_DRAW_TIME;
   }
 
   setPositiveSticks(){
